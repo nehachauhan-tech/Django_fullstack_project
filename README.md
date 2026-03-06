@@ -63,6 +63,9 @@ A modern, high-performance Django-based microblogging application featuring a sl
 ### **Register Form**
 ![Register Form](screenshots/register_form.png)
 
+### **Create New Tweet**
+![Create New Tweet](screenshots/create_tweet.png)
+
 ---
 
 ## 🛠 Built With
