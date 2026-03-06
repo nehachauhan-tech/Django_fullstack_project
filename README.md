@@ -50,9 +50,10 @@ A modern, high-performance Django-based microblogging application featuring a sl
     ```
     Visit `http://127.0.0.1:8000/` in your browser.
 
+
 ## 📸 Screenshots
 
-*(Add your screenshots here by replacing the placeholders below)*
+*(Visual overview of the application's key screens)*
 
 ### **Home Page**
 ![Home Page](screenshots/home_page.png)
