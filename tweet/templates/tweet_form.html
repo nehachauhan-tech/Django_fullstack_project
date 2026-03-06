@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+{% block title %}
+Chai aur Django - Tweet Form
+{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card bg-black text-white mt-5 shadow-lg border-secondary">
+                <div class="card-header border-secondary p-4 text-center">
+                    <h2 class="mb-0 fw-bold">{% if form.instance.pk %}Edit Tweet{% else %}Create New Tweet{% endif %}</h2>
+                </div>
+                <div class="card-body p-4 p-md-5">
+                    <!-- enctype required for file/photo upload -->
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <!-- Custom styled form fields wrapper -->
+                        <div class="mb-4 tweet-form-fields">
+                            {{ form.as_p }}
+                        </div>
+
+                        <!-- Image Preview Area -->
+                        <div id="image-preview-container" class="mb-4 text-center d-none">
+                            <p class="text-muted mb-2 small">Selected Image Preview:</p>
+                            <img id="image-preview" src="#" alt="Preview" class="img-fluid rounded border border-secondary shadow" style="max-height: 300px; object-fit: contain;">
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                            <a href="{% url 'tweet_list' %}" class="btn btn-outline-light px-4 py-2 me-md-2">Cancel</a>
+                            <button type="submit" class="btn btn-primary px-5 py-2 fw-bold">Save Tweet</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script for real-time image preview -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const photoInput = document.querySelector('input[type="file"]');
+            const previewContainer = document.getElementById('image-preview-container');
+            const previewImg = document.getElementById('image-preview');
+
+            if (photoInput) {
+                photoInput.addEventListener('change', function() {
+                    if (this.files && this.files[0]) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            previewImg.src = e.target.result;
+                            previewContainer.classList.remove('d-none');
+                        }
+                        reader.readAsDataURL(this.files[0]);
+                    } else {
+                        previewContainer.classList.add('d-none');
+                    }
+                });
+            }
+        });
+    </script>
+
+    <style>
+        .tweet-form-fields p { margin-bottom: 1.5rem; }
+        .tweet-form-fields label { display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 1.1rem; }
+        .tweet-form-fields input[type="text"], .tweet-form-fields textarea {
+            width: 100%; padding: 0.75rem 1rem; background-color: #111; border: 1px solid #444; border-radius: 8px; color: #fff; font-size: 1rem;
+        }
+        .tweet-form-fields input[type="file"] {
+            background-color: #111; color: #ddd; padding: 0.5rem; border-radius: 8px; border: 1px dashed #555; width: 100%;
+        }
+        .tweet-form-fields input:focus, .tweet-form-fields textarea:focus {
+            outline: none; border-color: #0d6efd; box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+    </style>
+{% endblock %}
